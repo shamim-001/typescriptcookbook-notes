@@ -52,3 +52,12 @@ doSomething(true);
 ```
 
 - If your apps work with a lot of different types, unknown is great for making sure that you can carry values throughout your code but don’t run into any safety problems because of any’s permissiveness.
+
+## 2.4 Working with Tuple Types
+
+- While arrays can be potentially endless in size and each element is of the same type (no matter how broad), tuple types have a fixed size, and each element has a distinct type.
+
+```ts
+const person: [string, number] = ["Shamim", 28];
+const [myName, age] = person;
+```
