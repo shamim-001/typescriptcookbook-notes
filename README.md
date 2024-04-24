@@ -61,3 +61,56 @@ doSomething(true);
 const person: [string, number] = ["Shamim", 28];
 const [myName, age] = person;
 ```
+
+## 2.5 Understanding Interfaces Versus Type Aliases
+
+_Use interfaces:_
+
+- When defining contracts that multiple parts of your codebase or external libraries will interact with.
+- When you want to leverage declaration merging to create complex object types from multiple interface declarations.
+- When you need to enforce specific object structures (e.g., with optional or readonly properties).
+
+_Use type aliases:_
+
+- When defining internal types that are specific to your project's domain.
+- When simplifying the representation of complex built-in or custom types for better readability.
+- Use type aliases when you don’t expect others to consume them.
+
+```ts
+// Interface for a basic User contract (shared across the codebase)
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+// Type alias for a more specific type used internally
+type UserDetails = User & {
+  age?: number; // Optional property
+  isActive: boolean;
+};
+
+function getUserDetails(userId: string): UserDetails {
+  // Logic to fetch user details
+  // ...
+  const user: UserDetails = {
+    id: "123",
+    name: "John Doe",
+    email: "john.doe@example.com",
+    isActive: true,
+  };
+  return user;
+}
+
+function displayUserDetails(user: UserDetails) {
+  console.log(`Name: ${user.name} (ID: ${user.id})`);
+  if (user.age !== undefined) {
+    console.log(`Age: ${user.age}`);
+  }
+  console.log(`Email: ${user.email}`);
+  console.log(`Active: ${user.isActive}`);
+}
+
+const userDetails = getUserDetails("123");
+displayUserDetails(userDetails);
+```
