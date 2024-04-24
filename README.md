@@ -114,3 +114,31 @@ function displayUserDetails(user: UserDetails) {
 const userDetails = getUserDetails("123");
 displayUserDetails(userDetails);
 ```
+
+## 2.6 Defining Function Overloads
+
+- Allows defining a function with multiple signatures that specify different ways to call it with different arguments.
+- TypeScript doesn't consider the implementation signature for type checking during function calls. This means the compiler relies solely on the declared signatures before the implementation.
+- To improve clarity and ensure consistency between intended usage and actual behavior, consider duplicating the implementation signature as the last declared signature.
+
+```ts
+type FormatValueType = {
+  (value: string): string; // overload 1
+  (value: number): string; // overload 2
+};
+
+// Actual Implementation
+const formatValue: FormatValueType = (value: string | number) => {
+  if (typeof value === "string") {
+    return value.toUpperCase(); // Handle string case
+  } else {
+    return value.toFixed(2); // Handle number case (assuming formatting to two decimals)
+  }
+};
+
+const formattedString = formatValue("hello"); // Calls overload 1
+const formattedNumber = formatValue(3.14159); // Calls overload 2
+
+console.log(typeof formattedNumber);
+console.log(typeof formattedString);
+```
