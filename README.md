@@ -142,3 +142,26 @@ const formattedNumber = formatValue(3.14159); // Calls overload 2
 console.log(typeof formattedNumber);
 console.log(typeof formattedString);
 ```
+
+## 2.7 Defining this Parameter Types
+
+- `this` lives within the scope of a function, and that points to an object or value bound to that function.
+
+```ts
+class Safe {
+  contents: string;
+
+  constructor(contents: string) {
+    this.contents = contents;
+  }
+
+  printContents() {
+    console.log(this.contents);
+  }
+}
+
+const safe = new Safe("Crown Jewels");
+const safe2 = new Safe("Crown Jewels 2");
+safe.printContents();
+safe2.printContents();
+```
