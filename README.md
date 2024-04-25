@@ -165,3 +165,35 @@ const safe2 = new Safe("Crown Jewels 2");
 safe.printContents();
 safe2.printContents();
 ```
+
+## 2.8 Working with Symbols
+
+- **Uniqueness:** Symbols are guaranteed to be one-of-a-kind, even if you create multiple with the same description. This is ideal for properties that absolutely cannot have duplicates.
+- **Non-Iterability:** When you loop through an object's properties (using `for...in` or `Object.keys()`), symbol properties are excluded. This makes them useful for storing private data you don't want to be accidentally exposed.
+
+```ts
+const TOKEN = Symbol();
+const user = {
+  name: "Alice",
+  id: 123,
+  [TOKEN]: "abc123XYZ",
+};
+
+for (const key in user) {
+  console.log(key); // name // id
+}
+
+const keys = Object.keys(user);
+console.log(keys); //["name", "id"]
+```
+
+- **Global Symbols:** The `Symbol.for()` function creates symbols that are registered globally. This means different parts of your code can access the same symbol using `Symbol.for('key')`.
+
+```ts
+const LOG_LEVEL_DEBUG = Symbol.for("debug");
+const debugSymbol = Symbol.for("debug");
+
+if (LOG_LEVEL_DEBUG === debugSymbol) {
+  console.log("debug Mode enabled");
+}
+```
