@@ -100,3 +100,35 @@ type Task = {
   assignedTo?: User; // Optional User property
 };
 ```
+
+## 3.2 Explicitly Defining Models with Discriminated Union Types
+
+```ts
+type Circle = {
+  radius: number;
+  kind: "circle";
+};
+type Square = {
+  x: number;
+  kind: "square";
+};
+type Triangle = {
+  x: number;
+  y: number;
+  kind: "triangle";
+};
+type Shape = Circle | Triangle | Square;
+
+function area(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius * shape.radius;
+    case "triangle":
+      return (shape.x * shape.y) / 2;
+    case "square":
+      return shape.x * shape.x;
+    default:
+      throw Error("not possible");
+  }
+}
+```
