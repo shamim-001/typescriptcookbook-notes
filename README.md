@@ -132,3 +132,63 @@ function area(shape: Shape) {
   }
 }
 ```
+
+## 3.3 Exhaustiveness Checking with the Assert never Technique
+
+```ts
+type Circle = {
+  radius: number;
+  kind: "circle";
+};
+type Square = {
+  x: number;
+  kind: "square";
+};
+type Triangle = {
+  x: number;
+  y: number;
+  kind: "triangle";
+};
+type Rectangle = {
+  x: number;
+  y: number;
+  kind: "rectangle";
+};
+type Shape = Circle | Triangle | Rectangle | Square;
+
+function area(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius * shape.radius;
+    case "triangle":
+      return (shape.x * shape.y) / 2;
+    case "square":
+      return shape.x * shape.x;
+    case "rectangle":
+      return shape.x * shape.x;
+    default:
+      assertNever(shape);
+  }
+}
+
+function assertNever(value: never): never {
+  console.error("Unknown value", value);
+  throw Error("Not possible");
+}
+```
+
+## 3.4 Pinning Types with Const Context
+
+```ts
+const circle = { radius: 2, kind: "circle" };
+area(circle);
+```
+
+- _Argument of type '{ radius: number; kind: string; }' is not assignable to parameter of type 'Shape'. Type '{ radius: number; kind: string; }' is not assignable to type 'Circle'. Types of property 'kind' are incompatible. Type 'string' is not assignable to type '"circle"'.ts(2345)_
+
+* _Solutions_
+
+```ts
+const circle = { radius: 2, kind: "circle" as const };
+area(circle);
+```
