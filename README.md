@@ -136,26 +136,6 @@ function area(shape: Shape) {
 ## 3.3 Exhaustiveness Checking with the Assert never Technique
 
 ```ts
-type Circle = {
-  radius: number;
-  kind: "circle";
-};
-type Square = {
-  x: number;
-  kind: "square";
-};
-type Triangle = {
-  x: number;
-  y: number;
-  kind: "triangle";
-};
-type Rectangle = {
-  x: number;
-  y: number;
-  kind: "rectangle";
-};
-type Shape = Circle | Triangle | Rectangle | Square;
-
 function area(shape: Shape) {
   switch (shape.kind) {
     case "circle":
@@ -191,4 +171,26 @@ area(circle);
 ```ts
 const circle = { radius: 2, kind: "circle" as const };
 area(circle);
+```
+
+## 3.5 Narrowing Types with Type Predicates
+
+- A type predicate is a function that returns a `boolean` value.
+
+```ts
+type dice = 1 | 2 | 3 | 4 | 5 | 6;
+
+function isDice(value: number): value is dice {
+  return [1, 2, 3, 4, 5, 6].includes(value);
+}
+
+function rollDice(input: number) {
+  if (isDice(input)) {
+    console.log(`Rolled a ${input}`);
+  } else {
+    console.log(`Invalid dice input: ${input}`);
+  }
+}
+
+rollDice(8);
 ```
